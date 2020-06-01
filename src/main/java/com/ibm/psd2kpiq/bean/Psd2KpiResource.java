@@ -96,7 +96,6 @@ public class Psd2KpiResource {
 	
     @POST
     @Path("/insertNewLog")
-    @Produces(MediaType.TEXT_PLAIN)
     public Response insertNewLog(KpiLogRequest request){
   	  
     	BaseResponse response = inserNewLogImpl(request);
@@ -178,6 +177,9 @@ public class Psd2KpiResource {
   			  
   		  			  
   	  } catch (Exception e) {
+  		  	response.setDescrizione("Servizio in errore "+e.getMessage());
+			response.setEsito(2);
+			response.setGuid(request.getGuid());
   			e.printStackTrace();
   	  }
 	return response;

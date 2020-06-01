@@ -28,3 +28,14 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./target/psd2-kpi-quarkus-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
+
+##Deploy on OC
+oc new-project psd2-kpi-quarkus
+
+sudo docker login -u $(oc whoami) -p $(oc whoami -t) docker-registry-default.bancacarige-86da35c0209e7d296108772575480d09-0001.eu-de.containers.appdomain.cloud
+
+sudo docker build -f src/main/docker/Dockerfile.native -t docker-registry-default.bancacarige-86da35c0209e7d296108772575480d09-0001.eu-de.containers.appdomain.cloud/psd2-kpi-quarkus/psd2-kpi-quarkus:0.1.0 .
+
+sudo docker push docker-registry-default.bancacarige-86da35c0209e7d296108772575480d09-0001.eu-de.containers.appdomain.cloud/psd2-kpi-quarkus/psd2-kpi-quarkus:0.1.0
+
+oc new-app --name psd2-kpi-quarkus --docker-image=quarkus/psd2-kpi-quarkus
