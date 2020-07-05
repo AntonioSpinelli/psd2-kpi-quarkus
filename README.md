@@ -29,7 +29,8 @@ You can then execute your native executable with: `./target/psd2-kpi-quarkus-1.0
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image.
 
-##Deploy on OC
+## Deploy on OC
+
 oc new-project psd2-kpi-quarkus
 
 sudo docker login -u $(oc whoami) -p $(oc whoami -t) docker-registry-default.bancacarige-86da35c0209e7d296108772575480d09-0001.eu-de.containers.appdomain.cloud
