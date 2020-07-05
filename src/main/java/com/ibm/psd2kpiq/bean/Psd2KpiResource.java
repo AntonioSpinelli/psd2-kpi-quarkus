@@ -1,15 +1,18 @@
 package com.ibm.psd2kpiq.bean;
 
+import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -28,6 +31,7 @@ import com.ibm.psd2kpiq.dto.MovimentiCcRequest;
 import com.ibm.psd2kpiq.dto.MovimentiCcResponse;
 import com.ibm.psd2kpiq.util.KpiLogUtilities;
 
+import io.quarkus.runtime.StartupEvent;
 import io.vertx.axle.pgclient.PgPool;
 import io.vertx.axle.sqlclient.Tuple;
 
@@ -97,12 +101,16 @@ public class Psd2KpiResource {
     @POST
     @Path("/insertNewLog")
     public Response insertNewLog(KpiLogRequest request){
-  	  
+        System.out.println("Insert new log: "+new SimpleDateFormat("HH:mm:ss.SSS").format(new java.util.Date(System.currentTimeMillis())));
+
     	BaseResponse response = inserNewLogImpl(request);
   	  
   	  return Response.ok(response).build();
     }
     
+    void onStart(@Observes StartupEvent startup) {
+        System.out.println("on start: "+new SimpleDateFormat("HH:mm:ss.SSS").format(new Date()));
+    }
     
     private BaseResponse inserNewLogImpl(KpiLogRequest request) {
   	  
